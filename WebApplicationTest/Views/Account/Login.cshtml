@@ -1,0 +1,14 @@
+﻿@using WebApplicationTest.ViewsModels.Account
+@model LoginViewModel
+
+@using (Html.BeginForm())
+{
+    @Html.EditorForModel()
+    <br />
+    <input type="submit" value="Отправить" />
+}
+
+@section Scripts
+{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
