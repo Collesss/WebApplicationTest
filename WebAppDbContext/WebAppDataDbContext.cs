@@ -9,7 +9,7 @@ namespace WebAppDbContext
 {
     public class WebAppDataDbContext : DbContext
     {
-        public DbSet<User> Users;
+        public DbSet<User> Users { get; set; }
 
         public WebAppDataDbContext(DbContextOptions<WebAppDataDbContext> options) : base(options)
         {

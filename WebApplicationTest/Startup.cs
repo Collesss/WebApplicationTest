@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAppDbContext;
+using WebApplicationTest.AutoMapperConfigures;
 
 namespace WebApplicationTest
 {
@@ -27,14 +28,15 @@ namespace WebApplicationTest
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-            services.AddDbContext<WebAppDataDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Default")));
+            services.AddDbContext<WebAppDataDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => {
-                    options.LoginPath = new PathString("Account/Login");
-                    options.LogoutPath = new PathString("Account/Logout");
-                    options.AccessDeniedPath = new PathString("Account/AccessDenied");
+                    options.LoginPath = new PathString("/Account/Login");
+                    options.LogoutPath = new PathString("/Account/Logout");
+                    options.AccessDeniedPath = new PathString("/Account/AccessDenied");
                 });
+            services.AddAutoMapper(cfg => cfg.AddProfile<AutoMapperConfig>());
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +57,7 @@ namespace WebApplicationTest
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -3,6 +3,7 @@
 
 @using (Html.BeginForm())
 {
+    <div asp-validation-summary="ModelOnly"></div>
     @Html.EditorForModel()
     <br />
     <input type="submit" value="Отправить" />
